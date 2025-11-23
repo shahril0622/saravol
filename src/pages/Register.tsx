@@ -38,10 +38,10 @@ const Register = () => {
       <Navbar />
       
       <div className="container mx-auto px-4 py-12 flex-1 flex items-center justify-center">
-        <Card className="w-full max-w-2xl animate-fade-in bg-gradient-card border-border shadow-soft">
+        <Card className="w-full max-w-2xl animate-fade-in bg-card border-border shadow-soft">
           <CardHeader className="space-y-4 text-center">
             <div className="flex justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-hero">
+              <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-primary">
                 <Heart className="h-8 w-8 text-primary-foreground" fill="currentColor" />
               </div>
             </div>
@@ -117,7 +117,7 @@ const Register = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft"
                     disabled={isLoading}
                   >
                     {isLoading ? "Creating account..." : "Create Volunteer Account"}
@@ -197,7 +197,7 @@ const Register = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft"
                     disabled={isLoading}
                   >
                     {isLoading ? "Submitting..." : "Register Organization"}
