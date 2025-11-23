@@ -160,7 +160,7 @@ const Browse = () => {
                 setCategoryFilter("all");
                 setLocationFilter("");
               }}
-              className="text-primary hover:underline font-medium"
+              className="bg-gradient-hero text-primary-foreground hover:opacity-90"
             >
               Clear Filters
             </Button>

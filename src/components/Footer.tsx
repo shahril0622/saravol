@@ -7,10 +7,12 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <Heart className="h-6 w-6 text-primary-foreground" fill="currentColor" />
+            <div className="flex items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-hero">
+                <Heart className="h-6 w-6 text-primary-foreground" fill="currentColor" />
+              </div>
+              <span className="text-xl font-bold text-foreground">KVMP</span>
             </div>
-            <span className="text-xl font-bold text-foreground">KVMP</span>
             <p className="text-sm text-muted-foreground">
               Connecting volunteers with opportunities to make a difference in Kuching.
             </p>

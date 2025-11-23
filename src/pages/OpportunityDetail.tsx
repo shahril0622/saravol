@@ -41,7 +41,7 @@ const OpportunityDetail = () => {
         <div className="container mx-auto px-4 py-20 text-center flex-1">
           <h1 className="text-2xl font-bold text-foreground mb-4">Opportunity not found</h1>
           <Link to="/browse">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button className="bg-gradient-hero text-primary-foreground hover:opacity-90">
               Browse Opportunities
             </Button>
           </Link>
@@ -72,7 +72,7 @@ const OpportunityDetail = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <Card className="animate-fade-in bg-card border-border">
+            <Card className="animate-fade-in bg-gradient-card border-border">
               <CardHeader>
                 <Badge className="w-fit mb-2 bg-accent text-accent-foreground">
                   {opportunity.category}
@@ -135,7 +135,7 @@ const OpportunityDetail = () => {
           </div>
 
           <div className="space-y-6">
-            <Card className="animate-fade-in sticky top-20 bg-card border-border" style={{ animationDelay: "0.1s" }}>
+            <Card className="animate-fade-in sticky top-20 bg-gradient-card border-border" style={{ animationDelay: "0.1s" }}>
               <CardHeader>
                 <CardTitle>Sign Up</CardTitle>
                 <CardDescription>
@@ -145,7 +145,7 @@ const OpportunityDetail = () => {
               <CardContent className="space-y-3">
                 <Button 
                   onClick={handleSignUp}
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft"
+                  className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft"
                 >
                   <Mail className="mr-2 h-4 w-4" />
                   Sign Up via Email
@@ -153,7 +153,7 @@ const OpportunityDetail = () => {
                 <Button 
                   onClick={handleWhatsApp}
                   variant="outline"
-                  className="w-full border-secondary text-foreground hover:bg-secondary hover:text-secondary-foreground"
+                  className="w-full border-accent text-foreground hover:bg-accent hover:text-accent-foreground"
                 >
                   <MessageCircle className="mr-2 h-4 w-4" />
                   Contact via WhatsApp
@@ -164,7 +164,7 @@ const OpportunityDetail = () => {
               </CardContent>
             </Card>
 
-            <Card className="animate-fade-in bg-card border-border" style={{ animationDelay: "0.2s" }}>
+            <Card className="animate-fade-in bg-gradient-card border-border" style={{ animationDelay: "0.2s" }}>
               <CardHeader>
                 <CardTitle>Contact Organizer</CardTitle>
               </CardHeader>

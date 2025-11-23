@@ -95,9 +95,16 @@ export default {
         "fade-in": "fade-in 0.5s ease-out",
         "slide-in": "slide-in 0.5s ease-out",
       },
+      backgroundImage: {
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+      },
       boxShadow: {
         "soft": "var(--shadow-soft)",
         "hover": "var(--shadow-hover)",
+      },
+      transitionProperty: {
+        "smooth": "var(--transition-smooth)",
       },
     },
   },

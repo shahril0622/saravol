@@ -36,7 +36,7 @@ const OpportunityCard = ({
   organization,
 }: OpportunityCardProps) => {
   return (
-    <Card className="group overflow-hidden transition-all hover:shadow-hover animate-fade-in bg-card border-border">
+    <Card className="group overflow-hidden transition-all hover:shadow-hover animate-fade-in bg-gradient-card border-border">
       <CardHeader>
         <div className="flex items-start justify-between gap-2 mb-2">
           <Badge className={getCategoryColor(category)}>
@@ -67,7 +67,7 @@ const OpportunityCard = ({
           </div>
         </div>
         <Link to={`/opportunity/${id}`}>
-          <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-opacity">
+          <Button className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90 transition-opacity">
             View Details
           </Button>
         </Link>

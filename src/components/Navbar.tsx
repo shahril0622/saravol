@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-hero">
               <Heart className="h-6 w-6 text-primary-foreground" fill="currentColor" />
             </div>
             <span className="text-xl font-bold text-foreground">KVMP</span>
@@ -38,7 +38,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               <Link to="/register">
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft">
+                <Button className="bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft">
                   Get Started
                 </Button>
               </Link>
@@ -78,7 +78,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90">
                   Get Started
                 </Button>
               </Link>

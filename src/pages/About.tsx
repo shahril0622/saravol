@@ -21,10 +21,10 @@ const About = () => {
           </div>
 
           {/* Mission Section */}
-          <Card className="animate-fade-in bg-card border-border shadow-soft" style={{ animationDelay: "0.1s" }}>
+          <Card className="animate-fade-in bg-gradient-card border-border shadow-soft" style={{ animationDelay: "0.1s" }}>
             <CardContent className="p-8">
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary flex-shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-hero flex-shrink-0">
                   <Target className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
@@ -39,11 +39,11 @@ const About = () => {
 
           {/* Values Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="animate-fade-in bg-card border-border shadow-soft" style={{ animationDelay: "0.2s" }}>
+            <Card className="animate-fade-in bg-gradient-card border-border shadow-soft" style={{ animationDelay: "0.2s" }}>
               <CardContent className="p-6 text-center space-y-4">
                 <div className="flex justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-secondary">
-                    <Heart className="h-8 w-8 text-secondary-foreground" fill="currentColor" />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-hero">
+                    <Heart className="h-8 w-8 text-primary-foreground" fill="currentColor" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-foreground">Community First</h3>
@@ -53,10 +53,10 @@ const About = () => {
               </CardContent>
             </Card>
 
-            <Card className="animate-fade-in bg-card border-border shadow-soft" style={{ animationDelay: "0.3s" }}>
+            <Card className="animate-fade-in bg-gradient-card border-border shadow-soft" style={{ animationDelay: "0.3s" }}>
               <CardContent className="p-6 text-center space-y-4">
                 <div className="flex justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-primary">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-hero">
                     <Users className="h-8 w-8 text-primary-foreground" />
                   </div>
                 </div>
@@ -67,11 +67,11 @@ const About = () => {
               </CardContent>
             </Card>
 
-            <Card className="animate-fade-in bg-card border-border shadow-soft" style={{ animationDelay: "0.4s" }}>
+            <Card className="animate-fade-in bg-gradient-card border-border shadow-soft" style={{ animationDelay: "0.4s" }}>
               <CardContent className="p-6 text-center space-y-4">
                 <div className="flex justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-accent">
-                    <Sparkles className="h-8 w-8 text-accent-foreground" />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-hero">
+                    <Sparkles className="h-8 w-8 text-primary-foreground" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-foreground">Impact</h3>
@@ -83,7 +83,7 @@ const About = () => {
           </div>
 
           {/* How It Works */}
-          <Card className="animate-fade-in bg-card border-border shadow-soft" style={{ animationDelay: "0.5s" }}>
+          <Card className="animate-fade-in bg-gradient-card border-border shadow-soft" style={{ animationDelay: "0.5s" }}>
             <CardContent className="p-8 space-y-6">
               <h2 className="text-2xl font-bold text-foreground text-center mb-6">How It Works</h2>
               
@@ -128,17 +128,17 @@ const About = () => {
           </Card>
 
           {/* Contact CTA */}
-          <Card className="animate-fade-in bg-secondary border-0" style={{ animationDelay: "0.6s" }}>
+          <Card className="animate-fade-in bg-gradient-hero border-0" style={{ animationDelay: "0.6s" }}>
             <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold text-secondary-foreground mb-3">
+              <h2 className="text-2xl font-bold text-primary-foreground mb-3">
                 Have Questions?
               </h2>
-              <p className="text-secondary-foreground/90 mb-6">
+              <p className="text-primary-foreground/90 mb-6">
                 We're here to help! Reach out to us if you need any assistance or have suggestions.
               </p>
               <a 
                 href="mailto:contact@kvmp.org"
-                className="text-secondary-foreground hover:underline font-medium"
+                className="text-primary-foreground hover:underline font-medium"
               >
                 contact@kvmp.org
               </a>

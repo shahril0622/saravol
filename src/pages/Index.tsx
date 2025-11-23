@@ -46,7 +46,12 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-primary">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-hero opacity-90" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-20"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
         <div className="container relative mx-auto px-4 py-20 md:py-32">
           <div className="max-w-3xl space-y-6 animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground leading-tight">
@@ -57,13 +62,13 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link to="/browse">
-                <Button size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-hover">
+                <Button size="lg" className="w-full sm:w-auto bg-card text-foreground hover:bg-card/90 shadow-hover">
                   Browse Opportunities
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link to="/register">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-accent text-primary-foreground bg-transparent hover:bg-accent/10">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-card text-card bg-transparent hover:bg-card/10">
                   Register Your NGO
                 </Button>
               </Link>
@@ -73,26 +78,26 @@ const Index = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center space-y-2 animate-slide-in">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-secondary mb-4">
-                <Heart className="h-8 w-8 text-secondary-foreground" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-hero mb-4">
+                <Heart className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="text-3xl font-bold text-foreground">100+</h3>
               <p className="text-muted-foreground">Active Opportunities</p>
             </div>
             <div className="text-center space-y-2 animate-slide-in" style={{ animationDelay: "0.1s" }}>
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-primary mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-hero mb-4">
                 <Users className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="text-3xl font-bold text-foreground">500+</h3>
               <p className="text-muted-foreground">Volunteers Registered</p>
             </div>
             <div className="text-center space-y-2 animate-slide-in" style={{ animationDelay: "0.2s" }}>
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-accent mb-4">
-                <Calendar className="h-8 w-8 text-accent-foreground" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-hero mb-4">
+                <Calendar className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="text-3xl font-bold text-foreground">50+</h3>
               <p className="text-muted-foreground">Partner Organizations</p>
@@ -123,7 +128,7 @@ const Index = () => {
 
           <div className="text-center mt-12">
             <Link to="/browse">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft">
+              <Button size="lg" className="bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft">
                 View All Opportunities
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -133,23 +138,23 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-gradient-hero">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">
               Ready to Get Involved?
             </h2>
-            <p className="text-lg text-secondary-foreground/90">
+            <p className="text-lg text-primary-foreground/90">
               Whether you're looking to volunteer or represent an organization, we're here to help you make a difference.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link to="/register">
-                <Button size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button size="lg" className="w-full sm:w-auto bg-card text-foreground hover:bg-card/90">
                   Sign Up as Volunteer
                 </Button>
               </Link>
               <Link to="/register">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-accent text-secondary-foreground bg-transparent hover:bg-accent/10">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-card text-card bg-transparent hover:bg-card/10">
                   Register as NGO
                 </Button>
               </Link>
