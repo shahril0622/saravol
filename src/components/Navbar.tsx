@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Menu } from "lucide-react";
+import { Heart, Menu, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -11,8 +11,9 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-hero">
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-hero">
               <Heart className="h-6 w-6 text-primary-foreground" fill="currentColor" />
+              <Users className="absolute h-3 w-3 text-primary-foreground" strokeWidth={3} />
             </div>
             <span className="text-xl font-bold text-foreground">SaraVol</span>
           </Link>
