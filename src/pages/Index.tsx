@@ -55,7 +55,7 @@ const Index = () => {
         <div className="container relative mx-auto px-4 py-20 md:py-32">
           <div className="max-w-3xl space-y-6 animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground leading-tight">
-              Make a Difference in Kuching
+              Connect Volunteers with Causes That Matter
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/90">
               Connect with meaningful volunteer opportunities and help build a stronger, more caring community together.
