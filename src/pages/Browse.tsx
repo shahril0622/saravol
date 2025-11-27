@@ -5,85 +5,44 @@ import OpportunityCard from "@/components/OpportunityCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search } from "lucide-react";
-
-// Mock data
-const mockOpportunities = [
-  {
-    id: "1",
-    title: "Beach Cleanup at Damai",
-    category: "Environment",
-    date: "March 15, 2025",
-    location: "Damai Beach, Kuching",
-    description: "Join us for a morning of beach cleaning to protect our marine life and keep our beaches beautiful.",
-    volunteersNeeded: 20,
-    organization: "Green Kuching Initiative",
-  },
-  {
-    id: "2",
-    title: "Food Distribution Drive",
-    category: "Food Aid",
-    date: "March 18, 2025",
-    location: "City Centre, Kuching",
-    description: "Help distribute meals to families in need across various locations in Kuching.",
-    volunteersNeeded: 15,
-    organization: "Kuching Food Bank",
-  },
-  {
-    id: "3",
-    title: "Animal Shelter Support",
-    category: "Animal Welfare",
-    date: "March 20, 2025",
-    location: "Kuching Animal Shelter",
-    description: "Spend time caring for rescued animals - feeding, cleaning, and providing companionship.",
-    volunteersNeeded: 10,
-    organization: "Sarawak Animal Society",
-  },
-  {
-    id: "4",
-    title: "Community Sports Day",
-    category: "Events",
-    date: "March 22, 2025",
-    location: "Padang Merdeka, Kuching",
-    description: "Help organize and run a fun sports day for local communities. Great for energetic volunteers!",
-    volunteersNeeded: 25,
-    organization: "Kuching Sports Club",
-  },
-  {
-    id: "5",
-    title: "Tree Planting Campaign",
-    category: "Environment",
-    date: "March 25, 2025",
-    location: "Santubong Area",
-    description: "Join our reforestation effort to plant native trees and restore natural habitats.",
-    volunteersNeeded: 30,
-    organization: "Green Kuching Initiative",
-  },
-  {
-    id: "6",
-    title: "Elderly Care Visit",
-    category: "Events",
-    date: "March 28, 2025",
-    location: "Kuching Senior Center",
-    description: "Spend quality time with elderly residents - chat, play games, and bring joy to their day.",
-    volunteersNeeded: 12,
-    organization: "Silver Years Foundation",
-  },
-];
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Search, CalendarIcon, X } from "lucide-react";
+import { format, parseISO, isAfter, isBefore, startOfDay } from "date-fns";
+import { cn } from "@/lib/utils";
+import { SARAWAK_REGIONS, OPPORTUNITY_CATEGORIES } from "@/data/sarawakRegions";
+import { mockOpportunities } from "@/data/mockOpportunities";
 
 const Browse = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
-  const [locationFilter, setLocationFilter] = useState("");
+  const [regionFilter, setRegionFilter] = useState("all");
+  const [dateFrom, setDateFrom] = useState<Date | undefined>();
+  const [dateTo, setDateTo] = useState<Date | undefined>();
 
   const filteredOpportunities = mockOpportunities.filter(opp => {
     const matchesSearch = opp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          opp.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = categoryFilter === "all" || opp.category.toLowerCase() === categoryFilter.toLowerCase();
-    const matchesLocation = !locationFilter || opp.location.toLowerCase().includes(locationFilter.toLowerCase());
+    const matchesRegion = regionFilter === "all" || opp.region === regionFilter;
     
-    return matchesSearch && matchesCategory && matchesLocation;
+    // Date filtering
+    const oppDate = parseISO(opp.date);
+    const matchesDateFrom = !dateFrom || !isBefore(oppDate, startOfDay(dateFrom));
+    const matchesDateTo = !dateTo || !isAfter(oppDate, startOfDay(dateTo));
+    
+    return matchesSearch && matchesCategory && matchesRegion && matchesDateFrom && matchesDateTo;
   });
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setCategoryFilter("all");
+    setRegionFilter("all");
+    setDateFrom(undefined);
+    setDateTo(undefined);
+  };
+
+  const hasActiveFilters = searchTerm || categoryFilter !== "all" || regionFilter !== "all" || dateFrom || dateTo;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -96,43 +55,120 @@ const Browse = () => {
             Volunteer Opportunities
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find the perfect opportunity to make a difference in your community
+            Find the perfect opportunity to make a difference across Sarawak
           </p>
         </div>
 
         {/* Filters */}
         <div className="mb-8 space-y-4 animate-fade-in">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search opportunities..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-card border-border"
-              />
-            </div>
-            
+          {/* Search */}
+          <div className="relative max-w-xl mx-auto">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search opportunities..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-card border-border"
+            />
+          </div>
+
+          {/* Filter Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Category Filter */}
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
               <SelectTrigger className="bg-card border-border">
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="environment">Environment</SelectItem>
-                <SelectItem value="food aid">Food Aid</SelectItem>
-                <SelectItem value="animal welfare">Animal Welfare</SelectItem>
-                <SelectItem value="events">Events</SelectItem>
+                {OPPORTUNITY_CATEGORIES.map((category) => (
+                  <SelectItem key={category} value={category.toLowerCase()}>
+                    {category}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
 
-            <Input
-              placeholder="Filter by location..."
-              value={locationFilter}
-              onChange={(e) => setLocationFilter(e.target.value)}
-              className="bg-card border-border"
-            />
+            {/* Region Filter */}
+            <Select value={regionFilter} onValueChange={setRegionFilter}>
+              <SelectTrigger className="bg-card border-border">
+                <SelectValue placeholder="All Regions" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Regions</SelectItem>
+                {SARAWAK_REGIONS.map((region) => (
+                  <SelectItem key={region} value={region}>
+                    {region}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Date From */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "justify-start text-left font-normal bg-card border-border",
+                    !dateFrom && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateFrom ? format(dateFrom, "PPP") : "From date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateFrom}
+                  onSelect={setDateFrom}
+                  initialFocus
+                  className="pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
+
+            {/* Date To */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "justify-start text-left font-normal bg-card border-border",
+                    !dateTo && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateTo ? format(dateTo, "PPP") : "To date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateTo}
+                  onSelect={setDateTo}
+                  initialFocus
+                  className="pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
           </div>
+
+          {/* Clear Filters */}
+          {hasActiveFilters && (
+            <div className="flex justify-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="mr-2 h-4 w-4" />
+                Clear all filters
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Results */}
@@ -147,7 +183,17 @@ const Browse = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredOpportunities.map((opportunity, index) => (
               <div key={opportunity.id} style={{ animationDelay: `${index * 0.05}s` }}>
-                <OpportunityCard {...opportunity} />
+                <OpportunityCard
+                  id={opportunity.id}
+                  title={opportunity.title}
+                  category={opportunity.category}
+                  date={format(parseISO(opportunity.date), "MMMM d, yyyy")}
+                  location={opportunity.location}
+                  region={opportunity.region}
+                  description={opportunity.description}
+                  volunteersNeeded={opportunity.volunteersNeeded}
+                  organization={opportunity.organization}
+                />
               </div>
             ))}
           </div>
@@ -155,11 +201,7 @@ const Browse = () => {
           <div className="text-center py-20 animate-fade-in">
             <p className="text-xl text-muted-foreground mb-4">No opportunities found</p>
             <Button 
-              onClick={() => {
-                setSearchTerm("");
-                setCategoryFilter("all");
-                setLocationFilter("");
-              }}
+              onClick={clearFilters}
               className="bg-gradient-hero text-primary-foreground hover:opacity-90"
             >
               Clear Filters

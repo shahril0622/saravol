@@ -6,33 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Users, ArrowLeft, Mail, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-
-// This would come from a database in a real app
-const mockOpportunities: Record<string, any> = {
-  "1": {
-    title: "Beach Cleanup at Damai",
-    category: "Environment",
-    date: "March 15, 2025",
-    time: "8:00 AM - 12:00 PM",
-    location: "Damai Beach, Kuching",
-    description: "Join us for a morning of beach cleaning to protect our marine life and keep our beaches beautiful. We'll provide all necessary equipment including gloves, bags, and refreshments. This is a great opportunity to meet like-minded people while making a real difference to our local environment.",
-    volunteersNeeded: 20,
-    volunteersRegistered: 12,
-    organization: "Green Kuching Initiative",
-    organizationEmail: "contact@greenkuching.org",
-    organizationPhone: "+60 12-345 6789",
-    requirements: [
-      "No prior experience needed",
-      "Wear comfortable clothing and closed shoes",
-      "Bring sun protection (hat, sunscreen)",
-      "Water will be provided"
-    ],
-  },
-};
+import { format, parseISO } from "date-fns";
+import { mockOpportunities } from "@/data/mockOpportunities";
 
 const OpportunityDetail = () => {
   const { id } = useParams();
-  const opportunity = mockOpportunities[id || ""];
+  const opportunity = mockOpportunities.find(opp => opp.id === id);
 
   if (!opportunity) {
     return (
@@ -51,14 +30,32 @@ const OpportunityDetail = () => {
     );
   }
 
+  const spotsLeft = opportunity.volunteersNeeded - (opportunity.volunteersRegistered || 0);
+
   const handleSignUp = () => {
-    toast.success("Sign up successful! Check your email for confirmation.");
+    if (opportunity.organizationEmail) {
+      const subject = encodeURIComponent(`Volunteer Sign Up: ${opportunity.title}`);
+      const body = encodeURIComponent(`Hi,\n\nI would like to sign up as a volunteer for "${opportunity.title}" on ${format(parseISO(opportunity.date), "MMMM d, yyyy")}.\n\nPlease let me know the next steps.\n\nThank you!`);
+      window.open(`mailto:${opportunity.organizationEmail}?subject=${subject}&body=${body}`, '_blank');
+      toast.success("Opening your email client...");
+    } else {
+      toast.error("Email contact not available for this opportunity");
+    }
   };
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Hi! I'm interested in volunteering for: ${opportunity.title}`);
-    window.open(`https://wa.me/${opportunity.organizationPhone.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
+    if (opportunity.organizationPhone) {
+      const message = encodeURIComponent(`Hi! I'm interested in volunteering for: ${opportunity.title} on ${format(parseISO(opportunity.date), "MMMM d, yyyy")}. Could you share more details?`);
+      const phone = opportunity.organizationPhone.replace(/[^0-9]/g, '');
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+      toast.success("Opening WhatsApp...");
+    } else {
+      toast.error("WhatsApp contact not available for this opportunity");
+    }
   };
+
+  const showEmailButton = opportunity.contactPreference === "email" || opportunity.contactPreference === "both" || !opportunity.contactPreference;
+  const showWhatsAppButton = opportunity.contactPreference === "whatsapp" || opportunity.contactPreference === "both";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -88,8 +85,10 @@ const OpportunityDetail = () => {
                     <Calendar className="h-5 w-5 text-primary mt-1" />
                     <div>
                       <p className="font-medium text-foreground">Date & Time</p>
-                      <p className="text-sm text-muted-foreground">{opportunity.date}</p>
-                      <p className="text-sm text-muted-foreground">{opportunity.time}</p>
+                      <p className="text-sm text-muted-foreground">{format(parseISO(opportunity.date), "MMMM d, yyyy")}</p>
+                      {opportunity.time && (
+                        <p className="text-sm text-muted-foreground">{opportunity.time}</p>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -97,6 +96,7 @@ const OpportunityDetail = () => {
                     <div>
                       <p className="font-medium text-foreground">Location</p>
                       <p className="text-sm text-muted-foreground">{opportunity.location}</p>
+                      <p className="text-sm text-muted-foreground">{opportunity.region}, Sarawak</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -104,7 +104,10 @@ const OpportunityDetail = () => {
                     <div>
                       <p className="font-medium text-foreground">Volunteers</p>
                       <p className="text-sm text-muted-foreground">
-                        {opportunity.volunteersRegistered} / {opportunity.volunteersNeeded} registered
+                        {opportunity.volunteersRegistered || 0} / {opportunity.volunteersNeeded} registered
+                      </p>
+                      <p className={`text-sm font-medium ${spotsLeft <= 5 ? 'text-destructive' : 'text-primary'}`}>
+                        {spotsLeft} spots left
                       </p>
                     </div>
                   </div>
@@ -117,7 +120,7 @@ const OpportunityDetail = () => {
                   </p>
                 </div>
 
-                {opportunity.requirements && (
+                {opportunity.requirements && opportunity.requirements.length > 0 && (
                   <div>
                     <h3 className="text-xl font-semibold text-foreground mb-3">Requirements</h3>
                     <ul className="space-y-2">
@@ -139,25 +142,33 @@ const OpportunityDetail = () => {
               <CardHeader>
                 <CardTitle>Sign Up</CardTitle>
                 <CardDescription>
-                  Join {opportunity.volunteersRegistered} other volunteers
+                  {spotsLeft > 0 
+                    ? `${spotsLeft} spots remaining` 
+                    : "This opportunity is full"}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button 
-                  onClick={handleSignUp}
-                  className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft"
-                >
-                  <Mail className="mr-2 h-4 w-4" />
-                  Sign Up via Email
-                </Button>
-                <Button 
-                  onClick={handleWhatsApp}
-                  variant="outline"
-                  className="w-full border-accent text-foreground hover:bg-accent hover:text-accent-foreground"
-                >
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  Contact via WhatsApp
-                </Button>
+                {showEmailButton && (
+                  <Button 
+                    onClick={handleSignUp}
+                    className="w-full bg-gradient-hero text-primary-foreground hover:opacity-90 shadow-soft"
+                    disabled={spotsLeft <= 0}
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    Sign Up via Email
+                  </Button>
+                )}
+                {showWhatsAppButton && (
+                  <Button 
+                    onClick={handleWhatsApp}
+                    variant="outline"
+                    className="w-full border-accent text-foreground hover:bg-accent hover:text-accent-foreground"
+                    disabled={spotsLeft <= 0}
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Contact via WhatsApp
+                  </Button>
+                )}
                 <p className="text-xs text-muted-foreground text-center pt-2">
                   You'll receive confirmation details after signing up
                 </p>
@@ -172,24 +183,28 @@ const OpportunityDetail = () => {
                 <div>
                   <p className="font-medium text-foreground">{opportunity.organization}</p>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-muted-foreground">Email:</p>
-                  <a 
-                    href={`mailto:${opportunity.organizationEmail}`}
-                    className="text-primary hover:underline break-all"
-                  >
-                    {opportunity.organizationEmail}
-                  </a>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-muted-foreground">Phone:</p>
-                  <a 
-                    href={`tel:${opportunity.organizationPhone}`}
-                    className="text-primary hover:underline"
-                  >
-                    {opportunity.organizationPhone}
-                  </a>
-                </div>
+                {opportunity.organizationEmail && (
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground">Email:</p>
+                    <a 
+                      href={`mailto:${opportunity.organizationEmail}`}
+                      className="text-primary hover:underline break-all"
+                    >
+                      {opportunity.organizationEmail}
+                    </a>
+                  </div>
+                )}
+                {opportunity.organizationPhone && (
+                  <div className="space-y-1">
+                    <p className="text-muted-foreground">Phone/WhatsApp:</p>
+                    <a 
+                      href={`tel:${opportunity.organizationPhone}`}
+                      className="text-primary hover:underline"
+                    >
+                      {opportunity.organizationPhone}
+                    </a>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

@@ -10,6 +10,7 @@ interface OpportunityCardProps {
   category: string;
   date: string;
   location: string;
+  region: string;
   description: string;
   volunteersNeeded: number;
   organization: string;
@@ -31,6 +32,7 @@ const OpportunityCard = ({
   category,
   date,
   location,
+  region,
   description,
   volunteersNeeded,
   organization,
@@ -59,7 +61,7 @@ const OpportunityCard = ({
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <MapPin className="h-4 w-4 text-secondary" />
-            <span>{location}</span>
+            <span>{location}, {region}</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Users className="h-4 w-4 text-accent" />

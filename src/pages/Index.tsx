@@ -5,40 +5,11 @@ import Footer from "@/components/Footer";
 import OpportunityCard from "@/components/OpportunityCard";
 import { Heart, Users, Calendar, ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-volunteer.jpg";
+import { mockOpportunities } from "@/data/mockOpportunities";
+import { format, parseISO } from "date-fns";
 
-// Mock data for featured opportunities
-const featuredOpportunities = [
-  {
-    id: "1",
-    title: "Beach Cleanup at Damai",
-    category: "Environment",
-    date: "March 15, 2025",
-    location: "Damai Beach, Kuching",
-    description: "Join us for a morning of beach cleaning to protect our marine life and keep our beaches beautiful.",
-    volunteersNeeded: 20,
-    organization: "Green Kuching Initiative",
-  },
-  {
-    id: "2",
-    title: "Food Distribution Drive",
-    category: "Food Aid",
-    date: "March 18, 2025",
-    location: "City Centre, Kuching",
-    description: "Help distribute meals to families in need across various locations in Kuching.",
-    volunteersNeeded: 15,
-    organization: "Kuching Food Bank",
-  },
-  {
-    id: "3",
-    title: "Animal Shelter Support",
-    category: "Animal Welfare",
-    date: "March 20, 2025",
-    location: "Kuching Animal Shelter",
-    description: "Spend time caring for rescued animals - feeding, cleaning, and providing companionship.",
-    volunteersNeeded: 10,
-    organization: "Sarawak Animal Society",
-  },
-];
+// Get first 3 opportunities for featured section
+const featuredOpportunities = mockOpportunities.slice(0, 3);
 
 const Index = () => {
   return (
@@ -121,7 +92,17 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredOpportunities.map((opportunity, index) => (
               <div key={opportunity.id} style={{ animationDelay: `${index * 0.1}s` }}>
-                <OpportunityCard {...opportunity} />
+                <OpportunityCard
+                  id={opportunity.id}
+                  title={opportunity.title}
+                  category={opportunity.category}
+                  date={format(parseISO(opportunity.date), "MMMM d, yyyy")}
+                  location={opportunity.location}
+                  region={opportunity.region}
+                  description={opportunity.description}
+                  volunteersNeeded={opportunity.volunteersNeeded}
+                  organization={opportunity.organization}
+                />
               </div>
             ))}
           </div>
