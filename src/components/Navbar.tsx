@@ -27,6 +27,12 @@ const Navbar = () => {
               Browse Opportunities
             </Link>
             <Link 
+              to="/ngo/dashboard" 
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              NGO Dashboard
+            </Link>
+            <Link 
               to="/about" 
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
@@ -64,6 +70,13 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Browse Opportunities
+            </Link>
+            <Link 
+              to="/ngo/dashboard" 
+              className="block py-2 text-foreground hover:text-primary transition-colors font-medium"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              NGO Dashboard
             </Link>
             <Link 
               to="/about" 
