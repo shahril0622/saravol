@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import OpportunityForm from "@/components/OpportunityForm";
 import { mockOpportunities, Opportunity } from "@/data/mockOpportunities";
@@ -58,14 +59,21 @@ const NGODashboard = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold text-foreground">NGO Dashboard</h1>
             <p className="text-muted-foreground mt-2">
               Manage your volunteer opportunities
             </p>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <div className="flex gap-2">
+            <Link to="/ngo/grant-planner">
+              <Button variant="outline">
+                <Sparkles className="mr-2 h-4 w-4" />
+                Grant Planner
+              </Button>
+            </Link>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => setEditingOpportunity(null)}>
                 <Plus className="mr-2 h-4 w-4" />
@@ -83,8 +91,9 @@ const NGODashboard = () => {
                 onSubmit={editingOpportunity ? handleEditOpportunity : handleAddOpportunity}
                 onCancel={closeDialog}
               />
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
 
         <div className="space-y-4">
